@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>API Test - Chauffeur Control</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p>API Test</p>
+        <h1>Chauffeur Control</h1>
+      </div>
+      <a href="index.html">Fahrer</a>
+    </header>
+
+    <main class="container">
+      <section class="panel">
+        <h2>GET /api/fahrten</h2>
+        <button id="getButton" class="primary" type="button">GET testen</button>
+        <p id="getStatus" class="status" role="status"></p>
+        <pre id="getOutput" class="code-output"></pre>
+      </section>
+
+      <section class="panel">
+        <h2>POST /api/fahrten</h2>
+        <button id="postButton" class="secondary" type="button">Testfahrt speichern</button>
+        <p id="postStatus" class="status" role="status"></p>
+        <pre id="postOutput" class="code-output"></pre>
+      </section>
+    </main>
+
+    <script>
+      const getStatus = document.querySelector("#getStatus");
+      const getOutput = document.querySelector("#getOutput");
+      const postStatus = document.querySelector("#postStatus");
+      const postOutput = document.querySelector("#postOutput");
+
+      async function parseJson(response) {
+        return response.json().catch(() => ({ error: "Keine JSON-Antwort." }));
+      }
+
+      async function testGet() {
+        getStatus.textContent = "GET laeuft...";
+        const response = await fetch("/api/fahrten");
+        const data = await parseJson(response);
+        getStatus.textContent = response.ok ? "GET erfolgreich." : "GET fehlgeschlagen.";
+        getStatus.className = response.ok ? "status success" : "status error";
+        getOutput.textContent = JSON.stringify(data, null, 2);
+      }
+
+      async function testPost() {
+        postStatus.textContent = "POST laeuft...";
+        const testFahrt = {
+          fahrer_name: "API Test",
+          fahrzeug: "TEST 123",
+          tour: "Testtour",
+          datum: new Date().toISOString().slice(0, 10),
+          startzeit: "08:00",
+          endzeit: "09:00",
+          km_start: 100,
+          km_ende: 125,
+          probleme: ["Sonstiges"],
+          bemerkung: "Automatischer Testeintrag"
+        };
+        const response = await fetch("/api/fahrten", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(testFahrt)
+        });
+        const data = await parseJson(response);
+        postStatus.textContent = response.ok ? "POST erfolgreich." : "POST fehlgeschlagen.";
+        postStatus.className = response.ok ? "status success" : "status error";
+        postOutput.textContent = JSON.stringify(data, null, 2);
+      }
+
+      document.querySelector("#getButton").addEventListener("click", testGet);
+      document.querySelector("#postButton").addEventListener("click", testPost);
+      testGet();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b1f3a">
+    <title>Chauffeur Control</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p>Fahrer-App</p>
+        <h1>Chauffeur Control</h1>
+      </div>
+      <a href="admin.html">Admin</a>
+    </header>
+
+    <main class="container">
+      <section class="panel">
+        <h2>Neue Fahrt erfassen</h2>
+        <form id="fahrtForm" class="form-grid">
+          <label>
+            Fahrername
+            <input name="fahrer_name" id="fahrerName" required autocomplete="name">
+          </label>
+
+          <label>
+            Fahrzeugkennzeichen
+            <input name="fahrzeug" required placeholder="z.B. ZH 123456">
+          </label>
+
+          <label>
+            Tour
+            <input name="tour" required placeholder="z.B. Tour A">
+          </label>
+
+          <label>
+            Datum
+            <input name="datum" id="datum" type="date" required>
+          </label>
+
+          <div class="two-cols">
+            <label>
+              Startzeit
+              <input name="startzeit" type="time" required>
+            </label>
+            <label>
+              Endzeit
+              <input name="endzeit" type="time" required>
+            </label>
+          </div>
+
+          <div class="two-cols">
+            <label>
+              Kilometer Start
+              <input name="km_start" type="number" min="0" inputmode="numeric" required>
+            </label>
+            <label>
+              Kilometer Ende
+              <input name="km_ende" type="number" min="0" inputmode="numeric" required>
+            </label>
+          </div>
+
+          <fieldset>
+            <legend>Probleme</legend>
+            <div class="checks">
+              <label><input type="checkbox" name="probleme" value="Fahrzeugschaden"> Fahrzeugschaden</label>
+              <label><input type="checkbox" name="probleme" value="Verspaetung"> Verspaetung</label>
+              <label><input type="checkbox" name="probleme" value="Kunde nicht erreichbar"> Kunde nicht erreichbar</label>
+              <label><input type="checkbox" name="probleme" value="Problem mit Ware"> Problem mit Ware</label>
+              <label><input type="checkbox" name="probleme" value="Sonstiges"> Sonstiges</label>
+            </div>
+          </fieldset>
+
+          <label>
+            Bemerkung
+            <textarea name="bemerkung" rows="4"></textarea>
+          </label>
+
+          <button class="primary" type="submit">Fahrt speichern</button>
+          <p id="status" class="status" role="status"></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "name": "chauffeur-control",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Statische Chauffeur-App mit Vercel API und Supabase.",
+  "scripts": {},
+  "license": "MIT"
+}
